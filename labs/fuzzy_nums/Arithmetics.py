@@ -37,7 +37,6 @@ class ArithmeticController:
         """
         return a - c, b - d
 
-
     @staticmethod
     def compute_intervals(a, b, c, d, sign='+'):
         """
@@ -46,6 +45,7 @@ class ArithmeticController:
         :param b:
         :param c:
         :param d:
+        :param sign:
         :return:
         """
         result = dict()

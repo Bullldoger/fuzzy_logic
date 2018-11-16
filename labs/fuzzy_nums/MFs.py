@@ -9,9 +9,16 @@ class Polygon:
     """
 
     mf_type = 'Polygon'
+    polygon = list()
 
     def __init__(self, *args, **kwargs):
-        pass
+        """
+
+        :param args:
+        :param kwargs:
+        """
+
+        self.polygon = args
 
     def f(self, x):
         """

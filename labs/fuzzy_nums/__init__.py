@@ -51,6 +51,9 @@ class FuzzyNumber:
         :return:
         """
 
+        left, right = list(), list()
+        result = list()
+
         for alpha in np.linspace(0, 1, self.sections):
             a_1, b_1 = self.get_alpha_cut(alpha=alpha)
             a_2, b_2 = other.get_alpha_cut(alpha=alpha)
@@ -66,7 +69,19 @@ class FuzzyNumber:
             elif operation == '/':
                 a, b = self.arithmetic_controller.division(a_1, b_1, a_2, b_2)
 
-        pass
+            left.append((a, alpha))
+            right.append((b, alpha))
+
+        result = left + [i for i in reversed(right)]
+
+        result_number = FuzzyNumber()
+        arithmetic_controller = ArithmeticController()
+        mf_function = Polygon(result)
+
+        result_number.set_arithmetic_controller(arithmetic_controller)
+        result_number.set_mf(mf_function)
+
+        return result_number
 
     def __add__(self, other):
         """
