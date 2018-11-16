@@ -157,7 +157,7 @@ class FuzzyNumber:
         values = np.linspace(self.left, self.right, self.sections)
         affiliation = np.array([self.mf_func.f(v) for v in values])
 
-        plt.figure(figsize=(8, 5))
+        plt.figure(figsize=size)
         plt.plot(values, affiliation, 'b', label='Membership function')
         plt.title('Fuzzy Number', fontsize=20)
         plt.ylabel('Affiliation', fontsize=16)
