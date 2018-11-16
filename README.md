@@ -1,4 +1,3 @@
 # Fuzzy Logic
 ## Gubkin RSU
-## There are solved tasks for fuzzy logic methods class
-
+## Solved problems on the course of fuzzy logic methods
