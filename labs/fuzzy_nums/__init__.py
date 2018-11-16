@@ -16,13 +16,14 @@ class FuzzyNumber:
     """
     mf_func = None
     arithmetic_controller = None
-    sections = 10
+    sections = None
     left = right = None
 
-    def __init__(self):
+    def __init__(self, sections=10):
         """
 
         """
+        self.sections = sections
         self.arithmetic_controller = ArithmeticController()
 
     def set_mf(self, mf_func):
