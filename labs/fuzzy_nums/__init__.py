@@ -2,13 +2,40 @@
 
 """
 
-import numpy as np
+
+class Polygon:
+    """
+
+    """
+
+    mf_type = 'Polygon'
+
+    def __init__(self, *args, **kwargs):
+        pass
+
+    def f(self, x):
+        """
+
+        :param x:
+        :return:
+        """
+        pass
+
+    def alpha_cut(self, alpha=1):
+        """
+
+        :param alpha:
+        :return:
+        """
+        pass
 
 
 class TriMF:
     """
 
     """
+
+    mf_type = 'TriMF'
 
     def __init__(self, a, b, c):
         """
@@ -42,6 +69,8 @@ class TrapMF:
 
     """
 
+    mf_type = 'TrapMF'
+
     def __init__(self, a, b, c, d):
         """
         f(x|a, b, c, d) = max(min( (x − a) / (b − a), 1, (d − x) / (d − c)), 0)
@@ -73,6 +102,8 @@ class GaussMF:
     """
 
     """
+
+    mf_type = 'GaussMF'
 
     def __init__(self, c, sig):
         """
@@ -182,6 +213,34 @@ class FuzzyNumber:
         """
         self.arithmetic_controller = arithmetic_controller
 
+    def __add__(self, other):
+        """
 
+        :param fuzzy_num:
+        :return:
+        """
+        pass
 
+    def __sub__(self, other):
+        """
 
+        :param other:
+        :return:
+        """
+        pass
+
+    def __mul__(self, other):
+        """
+
+        :param other:
+        :return:
+        """
+        pass
+
+    def __truediv__(self, other):
+        """
+
+        :param other:
+        :return:
+        """
+        pass
