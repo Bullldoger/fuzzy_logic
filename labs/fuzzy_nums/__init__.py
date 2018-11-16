@@ -6,6 +6,7 @@ from fuzzy_nums.MFs import GaussMF, Polygon, TrapMF, TriMF
 from fuzzy_nums.Arithmetics import ArithmeticController
 
 import numpy as np
+from matplotlib import pyplot as plt
 
 
 class FuzzyNumber:
@@ -14,7 +15,8 @@ class FuzzyNumber:
     """
     mf_func = None
     arithmetic_controller = None
-    sections = 10
+    sections = 100
+    left = right = None
 
     def __init__(self):
         pass
@@ -26,6 +28,8 @@ class FuzzyNumber:
         :return:
         """
         self.mf_func = mf_func
+        self.left = self.mf_func.left_value
+        self.right = self.mf_func.right_value
 
     def set_arithmetic_controller(self, arithmetic_controller):
         """
@@ -35,13 +39,13 @@ class FuzzyNumber:
         """
         self.arithmetic_controller = arithmetic_controller
 
-    def get_alpha_cut(self, alpha=1):
+    def get_alpha_cut(self, alpha=1, sections=10):
         """
 
         :param alpha:
         :return:
         """
-        return self.mf_func.alpha_cut(alpha=alpha)
+        return self.mf_func.alpha_cut(alpha=alpha, sections=sections)
 
     def handle_operation(self, other, operation='+'):
         """
@@ -52,11 +56,10 @@ class FuzzyNumber:
         """
 
         left, right = list(), list()
-        result = list()
 
         for alpha in np.linspace(0, 1, self.sections):
-            a_1, b_1 = self.get_alpha_cut(alpha=alpha)
-            a_2, b_2 = other.get_alpha_cut(alpha=alpha)
+            a_1, b_1 = self.get_alpha_cut(alpha=alpha, sections=self.sections)
+            a_2, b_2 = other.get_alpha_cut(alpha=alpha, sections=self.sections)
 
             a, b = 0, 0
 
@@ -114,3 +117,15 @@ class FuzzyNumber:
         :return:
         """
         return self.handle_operation(other, operation='/')
+
+    def plot_mf(self):
+        values = np.linspace(self.left, self.right, self.sections)
+        affiliation = np.array([self.mf_func.f(v) for v in values])
+
+        plt.figure(figsize=(4, 3))
+        plt.plot(values, affiliation, 'r')
+        plt.title('Fuzzy Number')
+        plt.ylabel('Affiliation')
+        plt.xlabel('Value')
+
+

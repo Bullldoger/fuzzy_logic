@@ -4,11 +4,12 @@
 
 import numpy as np
 
+
 class Polygon:
     """
 
     """
-
+    left_value = right_value = None
     mf_type = 'Polygon'
     polygon = list()
 
@@ -19,6 +20,8 @@ class Polygon:
         """
 
         self.polygon = args
+        self.left_value = args[0][0][0]
+        self.right_value = args[0][-1][0]
 
     def f(self, x):
         """
@@ -26,21 +29,39 @@ class Polygon:
         :param x:
         :return:
         """
-        pass
+        for point, alpha in self.polygon[0]:
+            if x <= point:
+                return alpha
 
-    def alpha_cut(self, alpha=1):
+    def alpha_cut(self, alpha=1, sections=10):
         """
 
+        :param sections:
         :param alpha:
         :return:
         """
-        pass
+        left_values = np.linspace(self.left_value, self.right_value, sections)
+        right_values = reversed(np.linspace(self.left_value, self.right_value, sections))
+
+        left = right = 0
+        for _l in left_values:
+            if alpha <= self.f(_l):
+                left = _l
+                break
+
+        for _r in right_values:
+            if alpha >= self.f(_r):
+                right = _r
+                break
+
+        return left, right
 
 
 class TriMF:
     """
 
     """
+    left_value = right_value = None
     a = b = c = None
     mf_type = 'TriMF'
 
@@ -57,6 +78,9 @@ class TriMF:
         self.b = b
         self.c = c
 
+        self.left_value = a
+        self.right_value = c
+
     def f(self, x):
         """
 
@@ -65,23 +89,24 @@ class TriMF:
         """
         return max(min((x - self.a) / (self.b - self.a), (self.c - x) / (self.c - self.b)), 0)
 
-    def alpha_cut(self, alpha=1):
+    def alpha_cut(self, alpha=1, sections=10):
         """
 
+        :param sections:
         :param alpha:
         :return:
         """
-        left_values = np.linspace(self.a, self.b, 100)
-        right_values = np.linspace(self.b, self.c, 100)
+        left_values = np.linspace(self.a, self.b, sections)
+        right_values = np.linspace(self.b, self.c, sections)
 
         left = right = 0
         for _l in left_values:
-            if alpha < self.f(_l):
+            if alpha <= self.f(_l):
                 left = _l
                 break
 
         for _r in right_values:
-            if alpha > self.f(_r):
+            if alpha >= self.f(_r):
                 right = _r
                 break
 
@@ -92,6 +117,7 @@ class TrapMF:
     """
 
     """
+    left_value = right_value = None
     a = b = c = d = None
     mf_type = 'TrapMF'
 
@@ -109,6 +135,9 @@ class TrapMF:
         self.c = c
         self.d = d
 
+        self.left_value = a
+        self.right_value = d
+
     def f(self, x):
         """
 
@@ -117,23 +146,24 @@ class TrapMF:
         """
         return  max(min((x - self.a) / (self.b - self.a), 1, (self.d - x) / (self.d - self.c)), 0)
 
-    def alpha_cut(self, alpha=1):
+    def alpha_cut(self, alpha=1, sections=10):
         """
 
+        :param sections:
         :param alpha:
         :return:
         """
-        left_values = np.linspace(self.a, self.b, 100)
-        right_values = np.linspace(self.c, self.d, 100)
+        left_values = np.linspace(self.a, self.b, sections)
+        right_values = np.linspace(self.c, self.d, sections)
 
         left = right = 0
         for _l in left_values:
-            if alpha < self.f(_l):
+            if alpha <= self.f(_l):
                 left = _l
                 break
 
         for _r in right_values:
-            if alpha > self.f(_r):
+            if alpha >= self.f(_r):
                 right = _r
                 break
 
