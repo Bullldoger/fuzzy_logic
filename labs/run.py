@@ -10,12 +10,9 @@ mf_1 = TriMF(-3, 4, 5)
 mf_2 = TriMF(3, 5, 7)
 
 f1.set_mf(mf_1)
-f1.set_arithmetic_controller(arithmetic_controller)
-
 f2.set_mf(mf_2)
-f2.set_arithmetic_controller(arithmetic_controller)
 
-f3 = 10 + f1
+f3 = f1 + 1
 
 f1.plot_mf()
 # f2.plot_mf()

@@ -1,7 +1,6 @@
 """
 
 """
-from numbers import Number
 
 import fuzzy_nums
 from fuzzy_nums.MFs import GaussMF, Polygon, TrapMF, TriMF
@@ -17,11 +16,14 @@ class FuzzyNumber:
     """
     mf_func = None
     arithmetic_controller = None
-    sections = 250
+    sections = 10
     left = right = None
 
     def __init__(self):
-        pass
+        """
+
+        """
+        self.arithmetic_controller = ArithmeticController()
 
     def set_mf(self, mf_func):
         """
@@ -80,10 +82,8 @@ class FuzzyNumber:
         result = left + [i for i in reversed(right)]
 
         result_number = FuzzyNumber()
-        arithmetic_controller = ArithmeticController()
         mf_function = Polygon(result)
 
-        result_number.set_arithmetic_controller(arithmetic_controller)
         result_number.set_mf(mf_function)
 
         return result_number
@@ -149,7 +149,7 @@ class FuzzyNumber:
         _other.set_mf(mf_func)
         return _other
 
-    def plot_mf(self):
+    def plot_mf(self, size=(16, 10)):
         """
 
         :return:
@@ -157,10 +157,11 @@ class FuzzyNumber:
         values = np.linspace(self.left, self.right, self.sections)
         affiliation = np.array([self.mf_func.f(v) for v in values])
 
-        plt.figure(figsize=(4, 3))
-        plt.plot(values, affiliation, 'b')
-        plt.title('Fuzzy Number')
-        plt.ylabel('Affiliation')
-        plt.xlabel('Value')
+        plt.figure(figsize=(8, 5))
+        plt.plot(values, affiliation, 'b', label='Membership function')
+        plt.title('Fuzzy Number', fontsize=20)
+        plt.ylabel('Affiliation', fontsize=16)
+        plt.xlabel('Value', fontsize=16)
+        plt.legend()
 
 

@@ -122,12 +122,3 @@ class ArithmeticController:
             left_1, right_1 = ArithmeticController.compute_intervals(a, b, c, d, sign='/')
 
         return left_1, right_1
-
-    def natural_arithmetic_action(self, a, b, k):
-        """
-
-        :param a:
-        :param b:
-        :param k:
-        :return:
-        """
