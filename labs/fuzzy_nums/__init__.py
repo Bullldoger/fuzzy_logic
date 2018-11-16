@@ -15,7 +15,7 @@ class FuzzyNumber:
     """
     mf_func = None
     arithmetic_controller = None
-    sections = 100
+    sections = 250
     left = right = None
 
     def __init__(self):
