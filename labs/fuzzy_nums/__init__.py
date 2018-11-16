@@ -1,6 +1,8 @@
 """
 
 """
+from numbers import Number
+
 import fuzzy_nums
 from fuzzy_nums.MFs import GaussMF, Polygon, TrapMF, TriMF
 from fuzzy_nums.Arithmetics import ArithmeticController
@@ -92,6 +94,10 @@ class FuzzyNumber:
         :param other:
         :return:
         """
+
+        if type(other) is int or type(other) is float:
+            other = self.crisp_to_fuzzy(other)
+
         return self.handle_operation(other, operation='+')
 
     def __sub__(self, other):
@@ -100,6 +106,10 @@ class FuzzyNumber:
         :param other:
         :return:
         """
+
+        if type(other) is int or type(other) is float:
+            other = self.crisp_to_fuzzy(other)
+
         return self.handle_operation(other, operation='-')
 
     def __mul__(self, other):
@@ -108,6 +118,10 @@ class FuzzyNumber:
         :param other:
         :return:
         """
+
+        if type(other) is int or type(other) is float:
+            other = self.crisp_to_fuzzy(other)
+
         return self.handle_operation(other, operation='*')
 
     def __truediv__(self, other):
@@ -116,7 +130,24 @@ class FuzzyNumber:
         :param other:
         :return:
         """
+
+        if type(other) is int or type(other) is float:
+            other = self.crisp_to_fuzzy(other)
+
         return self.handle_operation(other, operation='/')
+
+    def crisp_to_fuzzy(self, crisp):
+        """
+
+        :param crisp:
+        :return:
+        """
+        _other = FuzzyNumber()
+        mf_func = TriMF(crisp - 1e-10, crisp, crisp + 1e-10)
+        arithmetic_controller = ArithmeticController()
+        _other.set_arithmetic_controller(arithmetic_controller)
+        _other.set_mf(mf_func)
+        return _other
 
     def plot_mf(self):
         """

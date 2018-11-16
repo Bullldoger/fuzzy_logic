@@ -15,9 +15,9 @@ f1.set_arithmetic_controller(arithmetic_controller)
 f2.set_mf(mf_2)
 f2.set_arithmetic_controller(arithmetic_controller)
 
-f3 = f1 / f2
+f3 = 10 + f1
 
-# f1.plot_mf()
+f1.plot_mf()
 # f2.plot_mf()
 f3.plot_mf()
 
