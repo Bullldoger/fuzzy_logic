@@ -89,7 +89,7 @@ class FuzzyNumber:
     def __add__(self, other):
         """
 
-        :param fuzzy_num:
+        :param other:
         :return:
         """
         return self.handle_operation(other, operation='+')
@@ -119,11 +119,15 @@ class FuzzyNumber:
         return self.handle_operation(other, operation='/')
 
     def plot_mf(self):
+        """
+
+        :return:
+        """
         values = np.linspace(self.left, self.right, self.sections)
         affiliation = np.array([self.mf_func.f(v) for v in values])
 
         plt.figure(figsize=(4, 3))
-        plt.plot(values, affiliation, 'r')
+        plt.plot(values, affiliation, 'b')
         plt.title('Fuzzy Number')
         plt.ylabel('Affiliation')
         plt.xlabel('Value')

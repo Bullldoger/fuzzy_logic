@@ -119,7 +119,7 @@ class ArithmeticController:
 
             left_1, _ = ArithmeticController.compute_intervals(a, b, c, _c, sign='/')
             _, right_1 = ArithmeticController.compute_intervals(a, b, _d, d, sign='/')
-        else:
+        elif c * d > 0:
             left_1, right_1 = ArithmeticController.compute_intervals(a, b, c, d, sign='/')
 
         return left_1, right_1
