@@ -5,6 +5,7 @@ import fuzzy_nums
 from fuzzy_nums.MFs import GaussMF, Polygon, TrapMF, TriMF
 from fuzzy_nums.Arithmetics import ArithmeticController
 
+
 class FuzzyNumber:
     """
 
