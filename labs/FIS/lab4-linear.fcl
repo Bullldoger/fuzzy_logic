@@ -1,0 +1,54 @@
+FUNCTION_BLOCK LAB_1 (* annex C *)
+   
+    VAR_INPUT
+        water: REAL;
+        pressure: REAL;
+    END_VAR
+
+    VAR_OUTPUT
+        craneCold: REAL;
+        craneHot: REAL;
+    END_VAR
+
+    FUZZIFY water
+        TERM cold := (-50, 0) (0, 1) (35, 1) (40, 0);
+        TERM comfortable := (35, 0) (40, 1) (45, 0);
+        TERM hot := (40, 0) (45, 1) (75, 1) (100, 0);
+    END_FUZZIFY
+
+    FUZZIFY pressure
+        TERM weak := (-100, 0) (30, 1) (50, 0);
+        TERM comfortable := (30, 0) (50, 1) (70, 0);
+        TERM strong := (50, 0) (70, 1) (100, 1);
+    END_FUZZIFY
+
+    FUZZIFY craneCold
+        TERM dontTouch := 0;
+        TERM bitTouch := 10;
+        TERM touch := 20; 
+    END_FUZZIFY
+
+    FUZZIFY craneHot
+        TERM dontTouch := 0;
+        TERM bitTouch := 10;
+        TERM touch := 20; 
+    END_FUZZIFY
+
+    DEFUZZIFY craneCold
+        ACCU: MAX;
+        METHOD : RM;
+    END_DEFUZZIFY
+
+    DEFUZZIFY craneHot
+        ACCU: MAX;
+        METHOD : RM;
+    END_DEFUZZIFY
+
+    RULEBLOCK inference
+        AND : MIN;
+        RULE 1: IF water IS comfortable AND (pressure IS weak OR pressure IS strong) THEN craneCold IS bitTouch, craneHot IS bitTouch;
+        RULE 2: IF (water IS cold OR water IS hot) AND (pressure IS weak OR pressure IS strong) THEN craneCold IS touch, craneHot IS touch; 
+        RULE 3: IF water IS comfortable AND pressure IS comfortable THEN craneCold IS dontTouch, craneHot IS dontTouch;
+    END_RULEBLOCK
+
+END_FUNCTION_BLOCK

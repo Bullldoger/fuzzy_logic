@@ -1,0 +1,74 @@
+FUNCTION_BLOCK LAB_1 (* annex C *)
+   
+    VAR_INPUT
+		water: REAL;
+		pressure: REAL;
+
+		VARIABLE: REAL;
+	END_VAR
+
+	VAR_OUTPUT
+		craneCold: REAL;
+		craneHot: REAL;
+	END_VAR
+
+	FUZZIFY VARIABLE
+		TERM A := (-10, 0) (-5, 1) (0, 0);
+		TERM B := (-5, 0) (0, 1) (5, 0);
+		TERM C := (0, 0) (5, 1) (10, 0);
+	END_FUZZIFY
+
+	FUZZIFY water
+		TERM cold := (-50, 0) (0, 1) (35, 1) (40, 0);
+		TERM comfortable := (35, 0) (40, 1) (45, 0);
+		TERM hot := (40, 0) (	5, 1) (75, 1) (100, 0);
+	END_FUZZIFY
+
+	FUZZIFY pressure
+		TERM weak := (-100, 0) (30, 1) (50, 0);
+		TERM comfortable := (30, 0) (50, 1) (70, 0);
+		TERM strong := (50, 0) (70, 1) (100, 1);
+	END_FUZZIFY
+
+	FUZZIFY craneCold
+		TERM close := (-10, 0) (-10, 1) (-8, 1) (-6, 0);
+		TERM bitClose := (-8, 0) (-6, 1) (-5, 1) (-3, 0);
+		TERM dontTouch := (-5, 0) (-3, 1) (3, 1) (5, 0);
+		TERM bitOpen := (3, 0) (5, 1) (6, 1) (8, 0);
+		TERM open := (6, 0) (8, 1) (10, 1) (10, 0); 
+	END_FUZZIFY
+
+	FUZZIFY craneHot
+		TERM close := (-10, 0) (-10, 1) (-8, 1) (-6, 0);
+		TERM bitClose := (-8, 0) (-6, 1) (-5, 1) (-3, 0);
+		TERM dontTouch := (-5, 0) (-3, 1) (3, 1) (5, 0);
+		TERM bitOpen := (3, 0) (5, 1) (6, 1) (8, 0);
+		TERM open := (6, 0) (8, 1) (10, 1) (10, 0); 
+	END_FUZZIFY
+
+	DEFUZZIFY craneCold
+		ACCU: BSUM;
+        METHOD : COG;
+    END_DEFUZZIFY
+
+	DEFUZZIFY craneHot
+		ACCU: BSUM;
+        METHOD : COG;
+    END_DEFUZZIFY
+
+    RULEBLOCK inference
+        AND : MIN;
+        RULE 1: IF water IS cold AND pressure IS weak THEN craneCold IS dontTouch, craneHot IS open;
+        RULE 2: IF water IS cold AND pressure IS comfortable THEN craneCold IS bitClose, craneHot IS bitOpen;
+        RULE 3: IF water IS cold AND pressure IS strong THEN craneCold IS close, craneHot IS open;
+        RULE 4: IF water IS comfortable AND pressure IS weak THEN craneCold IS bitOpen, craneHot IS bitOpen;
+        RULE 5: IF water IS comfortable AND pressure IS comfortable THEN craneCold IS dontTouch, craneHot IS dontTouch;
+        RULE 6: IF water IS comfortable AND pressure IS strong THEN craneCold IS close, craneHot IS close;
+        RULE 7: IF water IS hot AND pressure IS weak THEN craneCold IS open, craneHot IS dontTouch;
+        RULE 8: IF water IS hot AND pressure IS comfortable THEN craneCold IS bitOpen, craneHot IS bitClose;
+        RULE 9: IF water IS hot AND pressure IS strong THEN craneCold IS bitClose, craneHot IS close;
+        
+    END_RULEBLOCK
+
+
+END_FUNCTION_BLOCK

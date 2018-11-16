@@ -1,0 +1,52 @@
+FUNCTION_BLOCK LAB_1 (* annex C *)
+   
+    VAR_INPUT
+        pressure: REAL; 
+        input_valve: REAL;
+    END_VAR
+
+    VAR_OUTPUT
+        output_valve: REAL;
+    END_VAR
+    
+    FUZZIFY pressure
+        TERM low := (-3, 0) (-3, 1) (-0.5, 1) (0, 0);
+        TERM normal := (-0.5, 0) (0, 1) (0.5, 0);
+        TERM high := (0, 0) (0.5, 1) (3, 1) (3, 0);
+    END_FUZZIFY
+
+    FUZZIFY input_valve
+        TERM open := (0, 0) (0, 1) (0.1, 1) (0.2, 0);
+        TERM work := (0.1, 0) (0.2, 1) (0.8, 1) (0.9, 0);
+        TERM close := (0.8, 0) (0.9, 1) (1, 1) (1, 0); 
+    END_FUZZIFY
+
+    FUZZIFY output_valve
+        TERM close := (-0.5, 0) (-0.5, 1) (-0.15, 1) (0, 0);
+        TERM dontTouch := (-0.15, 0) (0, 1) (0.15, 0);
+        TERM open := (0, 0) (0.15, 1) (0.5, 1) (0.5, 0); 
+    END_FUZZIFY
+
+    
+    DEFUZZIFY output_valve
+        ACCU: MAX;
+        METHOD : COG;
+    END_DEFUZZIFY
+
+    RULEBLOCK inference
+        AND : MIN;
+        RULE 1: IF pressure IS high AND input_valve IS open THEN output_valve IS dontTouch;
+        RULE 2: IF pressure IS high AND input_valve IS work THEN output_valve IS open;
+        RULE 3: IF pressure IS high AND input_valve IS close THEN output_valve IS open;
+        RULE 4: IF pressure IS normal AND input_valve IS open THEN output_valve IS dontTouch;
+        RULE 5: IF pressure IS normal AND input_valve IS work THEN output_valve IS dontTouch;
+        RULE 6: IF pressure IS normal AND input_valve IS close THEN output_valve IS dontTouch;
+        RULE 7: IF pressure IS low AND input_valve IS open THEN output_valve IS close;
+        RULE 8: IF pressure IS low AND input_valve IS work THEN output_valve IS close;
+        RULE 9: IF pressure IS low AND input_valve IS close THEN output_valve IS dontTouch;
+        
+    END_RULEBLOCK
+
+
+END_FUNCTION_BLOCK
+

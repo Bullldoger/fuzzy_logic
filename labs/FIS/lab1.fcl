@@ -1,0 +1,44 @@
+FUNCTION_BLOCK LAB_1 (* annex C *)
+    
+    VAR_INPUT
+		U: REAL;
+		Temperature: REAL;
+		OilSutaration: REAL;
+		FilmRank: REAL;
+		RAM: REAL;
+	END_VAR
+
+
+	FUZZIFY U
+		TERM low := (0, 0) (0, 1) (150, 1) (180, 1) (210, 0);
+		TERM normal := (180, 0) (210, 1) (230, 1) (250, 0);
+		TERM high := (230, 0) (250, 1) (280, 1) (320, 1) (320, 0);
+	END_FUZZIFY
+
+	FUZZIFY Temperature
+		TERM low := (1, 1) (10, 1) (15, 1) (20, 0);
+		TERM normal := (15, 0) (20, 1) (30, 1) (50, 0);
+		TERM high := (30, 0) (50, 1) (60, 1) (80, 1);
+	END_FUZZIFY	
+
+
+	FUZZIFY OilSutaration
+		TERM unsaturated := (0, 1) (0.2, 1) (0.4, 1) (0.5, 0);
+		TERM saturated := (0.4, 0) (0.5, 1) (0.6, 1) (0.7, 0);
+		TERM supersaturated := (0.6, 0) (0.7, 1) (1, 1) (1, 0);
+	END_FUZZIFY	
+
+	FUZZIFY FilmRank
+		TERM bad := (0, 1) (3, 1) (5, 0);
+		TERM normal := (3, 0) (5, 1) (6, 1) (7, 0);
+		TERM good := (6, 0) (7, 1) (10, 1);
+	END_FUZZIFY	
+
+	FUZZIFY RAM
+		TERM unacceptable := (0, 1) (1024, 1) (2048, 0);
+		TERM acceptable := (1024, 0) (2048, 1) (4096, 1) (8192, 0);
+		TERM excess := (4096, 0) (8192, 1) (16384, 1);
+	END_FUZZIFY	
+
+
+END_FUNCTION_BLOCK
