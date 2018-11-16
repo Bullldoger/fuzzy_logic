@@ -2,6 +2,7 @@
 
 """
 
+import numpy as np
 
 class Polygon:
     """
@@ -11,11 +12,10 @@ class Polygon:
     mf_type = 'Polygon'
     polygon = list()
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args):
         """
 
         :param args:
-        :param kwargs:
         """
 
         self.polygon = args
@@ -41,7 +41,7 @@ class TriMF:
     """
 
     """
-
+    a = b = c = None
     mf_type = 'TriMF'
 
     def __init__(self, a, b, c):
@@ -53,6 +53,9 @@ class TriMF:
         :param c:
         :return:
         """
+        self.a = a
+        self.b = b
+        self.c = c
 
     def f(self, x):
         """
@@ -60,7 +63,7 @@ class TriMF:
         :param x:
         :return:
         """
-        pass
+        return max(min((x - self.a) / (self.b - self.a), (self.c - x) / (self.c - self.b)), 0)
 
     def alpha_cut(self, alpha=1):
         """
@@ -68,14 +71,28 @@ class TriMF:
         :param alpha:
         :return:
         """
-        pass
+        left_values = np.linspace(self.a, self.b, 100)
+        right_values = np.linspace(self.b, self.c, 100)
+
+        left = right = 0
+        for _l in left_values:
+            if alpha < self.f(_l):
+                left = _l
+                break
+
+        for _r in right_values:
+            if alpha > self.f(_r):
+                right = _r
+                break
+
+        return left, right
 
 
 class TrapMF:
     """
 
     """
-
+    a = b = c = d = None
     mf_type = 'TrapMF'
 
     def __init__(self, a, b, c, d):
@@ -87,6 +104,10 @@ class TrapMF:
         :param d:
         :return:
         """
+        self.a = a
+        self.b = b
+        self.c = c
+        self.d = d
 
     def f(self, x):
         """
@@ -94,7 +115,7 @@ class TrapMF:
         :param x:
         :return:
         """
-        pass
+        return  max(min((x - self.a) / (self.b - self.a), 1, (self.d - x) / (self.d - self.c)), 0)
 
     def alpha_cut(self, alpha=1):
         """
@@ -102,7 +123,26 @@ class TrapMF:
         :param alpha:
         :return:
         """
-        pass
+        left_values = np.linspace(self.a, self.b, 100)
+        right_values = np.linspace(self.c, self.d, 100)
+
+        left = right = 0
+        for _l in left_values:
+            if alpha < self.f(_l):
+                left = _l
+                break
+
+        for _r in right_values:
+            if alpha > self.f(_r):
+                right = _r
+                break
+
+        if left is None:
+            left = self.b
+        if right is None:
+            right = self.c
+
+        return left, right
 
 
 class GaussMF:
