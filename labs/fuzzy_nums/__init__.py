@@ -80,7 +80,7 @@ class FuzzyNumber:
             left.append((a, alpha))
             right.append((b, alpha))
 
-        result = left + [i for i in right]
+        result = left + [i for i in reversed(right)]
         result = sorted(result, key=lambda x: x[0])
 
         result_number = FuzzyNumber(sections=max(self.sections, other.sections))
