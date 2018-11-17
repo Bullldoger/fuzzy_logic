@@ -9,6 +9,7 @@ class Polygon:
     """
 
     """
+
     left_value = right_value = None
     mf_type = 'polygon'
     polygon = list()
@@ -63,9 +64,10 @@ class TriMF:
     """
 
     """
+
     left_value = right_value = None
     a = b = c = None
-    mf_type = 'TriMF'
+    mf_type = 'triMF'
 
     def __init__(self, a, b, c):
         """
@@ -119,9 +121,10 @@ class TrapMF:
     """
 
     """
+
     left_value = right_value = None
     a = b = c = d = None
-    mf_type = 'TrapMF'
+    mf_type = 'trapMF'
 
     def __init__(self, a, b, c, d):
         """
@@ -182,7 +185,7 @@ class GaussMF:
 
     """
 
-    mf_type = 'GaussMF'
+    mf_type = 'gaussMF'
 
     def __init__(self, c, sig):
         """

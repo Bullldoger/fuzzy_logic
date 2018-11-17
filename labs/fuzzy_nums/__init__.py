@@ -14,6 +14,7 @@ class FuzzyNumber:
     """
 
     """
+
     mf_func = None
     arithmetic_controller = None
     sections = None
@@ -80,7 +81,7 @@ class FuzzyNumber:
             left.append((a, alpha))
             right.append((b, alpha))
 
-        result = left + [i for i in reversed(right)]
+        result = left + [i for i in right]
         result = sorted(result, key=lambda x: x[0])
 
         result_number = FuzzyNumber(sections=max(self.sections, other.sections))
@@ -171,5 +172,4 @@ class FuzzyNumber:
         plt.ylabel('Affiliation', fontsize=16)
         plt.xlabel('Value', fontsize=16)
         plt.legend()
-
-
+        plt.grid()
