@@ -62,7 +62,7 @@ class FuzzyNumber:
 
         left, right = list(), list()
 
-        for alpha in np.linspace(0, 1, self.sections):
+        for alpha in np.linspace(0, 1, max(self.sections, other.sections)):
             a_1, b_1 = self.get_alpha_cut(alpha=alpha, sections=self.sections)
             a_2, b_2 = other.get_alpha_cut(alpha=alpha, sections=self.sections)
 
@@ -80,9 +80,10 @@ class FuzzyNumber:
             left.append((a, alpha))
             right.append((b, alpha))
 
-        result = left + [i for i in reversed(right)]
+        result = left + [i for i in right]
+        result = sorted(result, key=lambda x: x[0])
 
-        result_number = FuzzyNumber()
+        result_number = FuzzyNumber(sections=max(self.sections, other.sections))
         mf_function = Polygon(result)
 
         result_number.set_mf(mf_function)
@@ -137,7 +138,8 @@ class FuzzyNumber:
 
         return self.handle_operation(other, operation='/')
 
-    def crisp_to_fuzzy(self, crisp):
+    @staticmethod
+    def crisp_to_fuzzy(crisp):
         """
 
         :param crisp:
@@ -150,13 +152,18 @@ class FuzzyNumber:
         _other.set_mf(mf_func)
         return _other
 
-    def plot_mf(self, size=(16, 10)):
+    def plot_mf(self, size=(8, 5)):
         """
 
         :return:
         """
-        values = np.linspace(self.left, self.right, self.sections)
-        affiliation = np.array([self.mf_func.f(v) for v in values])
+
+        if self.mf_func.mf_type == 'polygon':
+            values = [ v for v, _ in self.mf_func.polygon ]
+            affiliation = [alpha for _, alpha in self.mf_func.polygon]
+        else:
+            values = np.linspace(self.left, self.right, self.sections)
+            affiliation = np.array([self.mf_func.f(v) for v in values])
 
         plt.figure(figsize=size)
         plt.plot(values, affiliation, 'b', label='Membership function')

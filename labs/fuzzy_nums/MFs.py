@@ -10,7 +10,7 @@ class Polygon:
 
     """
     left_value = right_value = None
-    mf_type = 'Polygon'
+    mf_type = 'polygon'
     polygon = list()
 
     def __init__(self, *args):
@@ -19,9 +19,9 @@ class Polygon:
         :param args:
         """
 
-        self.polygon = args
-        self.left_value = args[0][0][0]
-        self.right_value = args[0][-1][0]
+        self.polygon = args[0]
+        self.left_value = self.polygon[0][0]
+        self.right_value = self.polygon[-1][0]
 
     def f(self, x):
         """
@@ -29,9 +29,11 @@ class Polygon:
         :param x:
         :return:
         """
-        for point, alpha in self.polygon[0]:
-            if x <= point:
-                return alpha
+        for (point_l, alpha_l), (point_r, alpha_r) in zip(self.polygon[:-1], self.polygon[1:]):
+            if point_l <= x < point_r:
+                return alpha_l
+
+        return 0
 
     def alpha_cut(self, alpha=1, sections=10):
         """

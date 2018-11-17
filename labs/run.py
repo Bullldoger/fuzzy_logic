@@ -4,17 +4,17 @@ from fuzzy_nums.Arithmetics import ArithmeticController
 
 import matplotlib.pyplot as plt
 
-f1, f2 = FuzzyNumber(), FuzzyNumber()
+f1, f2 = FuzzyNumber(sections=1000), FuzzyNumber(sections=100)
 arithmetic_controller = ArithmeticController()
-mf_1 = TriMF(-3, 4, 5)
-mf_2 = TriMF(3, 5, 7)
+mf_1 = TriMF(-16, -4, -3)
+mf_2 = TriMF(3, 4, 25)
 
 f1.set_mf(mf_1)
 f2.set_mf(mf_2)
 
-f3 = f1 + 1
+f3 = f1 + f2
 
-f1.plot_mf()
+# f1.plot_mf()
 # f2.plot_mf()
 f3.plot_mf()
 
