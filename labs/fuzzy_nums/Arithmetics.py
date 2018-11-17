@@ -36,24 +36,6 @@ class ArithmeticController:
         return a - d, b - c
 
     @staticmethod
-    def compute_intervals(a, b, c, d, sign='+'):
-        """
-
-        :param a:
-        :param b:
-        :param c:
-        :param d:
-        :param sign:
-        :return:
-        """
-        result = dict()
-
-        result['*'] = (min(a * c, a * d, b * c, b * d), max(a * c, a * d, b * c, b * d))
-        result['/'] = (min(a / c, a / d, b / c, b / d), max(a / c, a / d, b / c, b / d))
-
-        return result[sign]
-
-    @staticmethod
     def multiplication(a, b, c, d):
         """
 
@@ -63,7 +45,10 @@ class ArithmeticController:
         :param d:
         :return:
         """
-        return ArithmeticController.compute_intervals(a, b, c, d, sign='*')
+
+        left, right = (min(a * c, a * d, b * c, b * d), max(a * c, a * d, b * c, b * d))
+
+        return left, right
 
     @staticmethod
     def division(a, b, c, d):
@@ -78,7 +63,8 @@ class ArithmeticController:
         """
 
         if c * d > 0:
-            left_1, right_1 = ArithmeticController.compute_intervals(a, b, c, d, sign='/')
+            left, right = (min(a / c, a / d, b / c, b / d), max(a / c, a / d, b / c, b / d))
         else:
             raise Exception
-        return left_1, right_1
+
+        return left, right

@@ -14,7 +14,7 @@ mf_2 = TriMF(3, 5, 7)
 f1.set_mf(mf_1)
 f2.set_mf(mf_2)
 
-f3 = f1 / f2
+f3 = f1 * f2
 
 # f1.plot_mf()
 # f2.plot_mf()
