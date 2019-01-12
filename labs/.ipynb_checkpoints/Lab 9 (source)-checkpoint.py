@@ -101,7 +101,7 @@ def plot_FCM_results(data, max_clusters=4):
         ax.legend()
         ax.grid()
     
-    plt.show()
+#     plt.show()
     
     return mfs
 
