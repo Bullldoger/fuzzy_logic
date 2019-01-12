@@ -105,6 +105,7 @@ def plot_FCM_results(data, max_clusters=4):
     
     return mfs
 
+mfs = plot_FCM_results(Q, max_clusters=8)
 P1 = data.values[:, 0]
 P2 = data.values[:, 1]
 CL1, CL2 = mfs[1][1][:, 0], mfs[1][1][:, 1]
